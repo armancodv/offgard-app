@@ -1,0 +1,67 @@
+<div ui-content-for="title">
+    <span>ورود</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <form role="form" ng-submit="insert_login(username,password,captcha.captcha_id,captcha_code)"
+              ng-if="!login.status">
+            <fieldset>
+                <legend>ورود</legend>
+                <div class="form-group">
+                    <label>نام کاربری</label>
+                    <input type="text" ng-model="username" class="form-control" autocorrect="off" autocapitalize="none"
+                           placeholder="نام کاربری خود را وارد نمایید" dir="ltr">
+                </div>
+                <div class="form-group">
+                    <label>کلمه عبور</label>
+                    <input type="password" ng-model="password" class="form-control"
+                           placeholder="کلمه عبور خود را وارد نمایید" dir="ltr">
+                </div>
+                <div class="form-group">
+                    <label>تصویر امنیتی</label>
+                    <img src="{{show_captcha_url(captcha.captcha_id)}}">
+                    <i class="fa fa-refresh" ng-click="show_captcha()"></i>
+                    <input type="text" ng-model="captcha_code" class="form-control" autocorrect="off" autocapitalize="none"
+                           placeholder="تصویر امنیتی را وارد نمایید" dir="ltr">
+                </div>
+            </fieldset>
+            <hr>
+            <div class="alert alert-info" ng-if="login.loading"><i class="fa fa-circle-o-notch fa-spin"></i> لطفا صبر
+                کنید.
+            </div>
+            <div class="alert alert-danger" ng-if="login.error">{{login.error}}</div>
+            <button class="btn btn-primary btn-block">ورود</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="insert_login(username,password,captcha.captcha_id,captcha_code)">ورود</a>
+            </div>
+        </form>
+        <div ng-if="login.status">
+            <div class="alert alert-success" ng-if="login.success">{{login.success}}</div>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th colspan="2">خوش آمدید</th>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-user fa-fw"></i> نام کاربری</td>
+                        <td>{{login.username}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-user fa-fw"></i> نام</td>
+                        <td>{{login.name}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-user fa-fw"></i> ایمیل</td>
+                        <td>{{login.email}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-user fa-fw"></i> شماره همراه</td>
+                        <td>{{login.phone}}</td>
+                    </tr>
+                </table>
+                <a class="btn btn-primary btn-block" href="#/"><i class="fa fa-home"></i> خانه</a>
+                <a class="btn btn-primary btn-block" ng-click="insert_logout(login.username,login.token)"><i
+                        class="fa fa-sign-out"></i> خروج</a>
+            </div>
+        </div>
+    </div>

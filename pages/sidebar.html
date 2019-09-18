@@ -1,0 +1,34 @@
+<div class="scrollable">
+    <div class="scrollable-header">
+        <div class="app-logo"><img src="images/logo.png"></div>
+        <h1 class="app-name">آفگرد</h1>
+        <h2 class="app-subtitle">سامانه تخفیفات شهری</h2>
+    </div>
+    <div class="scrollable-content">
+        <div class="list-group" ui-turn-off="uiSidebarRight">
+            <a class="list-group-item" href="#/">&nbsp;خانه<i class="fa fa-home fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/search">&nbsp;جستجو<i class="fa fa-search fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/cities">&nbsp;شهر: {{city_selected.name}}<i
+                    class="fa fa-map-marker fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/categories">&nbsp;دسته بندی: {{category_selected.name}}<i
+                    class="fa fa-filter fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/add-off" ng-click="delete_message()">&nbsp;افزودن تخفیف<i
+                    class="fa fa-plus fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/login" ng-click="delete_message()" ng-if="login.status">&nbsp;نام:
+                {{login.name}}<i class="fa fa-user fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/my-offs" ng-if="login.status" ng-click="delete_message()">&nbsp;تخفیفات
+                من<i class="fa fa-list-ul fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/login" ng-if="!login.status" ng-click="show_captcha();delete_message()">
+                &nbsp;ورود<i class="fa fa-sign-in fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/signup" ng-if="!login.status" ng-click="show_captcha();delete_message()">
+                &nbsp;ثبت نام<i class="fa fa-user-plus fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/reset" ng-if="!login.status" ng-click="show_captcha();delete_message()">
+                &nbsp;فراموشی کلمه عبور<i class="fa fa-key fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/rule">&nbsp;قوانین<i class="fa fa-balance-scale fa-fw pull-right"></i></a>
+            <a class="list-group-item" href="#/contact">&nbsp;تماس با ما<i class="fa fa-envelope fa-fw pull-right"></i></a>
+            <div class="a1">
+                <img ng-repeat="item in advertisements.result.a1" src="{{item.path}}" ng-click="open_link(item.link)">
+            </div>
+        </div>
+    </div>
+</div>

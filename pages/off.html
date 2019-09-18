@@ -1,0 +1,171 @@
+<div ui-content-for="title" ng-init="show_off()">
+    <span>آفگرد</span>
+    <div class="refresh" ng-if="off.loading"><i class="fa fa-refresh fa-spin"></i></div>
+    <div class="refresh" ng-click="show_off()" ng-if="!off.loading"><i class="fa fa-refresh"></i></div>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content">
+        <a href="#/" class="no-decoration">
+            <div class="col-sm-12 page-button margin-bottom"><i class="fa fa-home"></i> بازگشت به خانه</div>
+        </a>
+        <div class="c1">
+            <img ng-repeat="item in advertisements.result.c1" src="{{item.path}}" ng-click="open_link(item.link)">
+        </div>
+        <div class="col-sm-12" ng-repeat="item in off.result">
+            <div class="off off-full">
+                <div class="off-top"
+                     style="background-image: url({{item.image}});">
+                </div>
+                <table class="off-bottom">
+                    <tr>
+                        <td colspan="2">
+                            <a class="no-decoration" href="#/off/{{item.id}}">
+                                <h4>{{item.name | limitTo: 30}}{{item.name.length > 30 ? '...' : ''}}</h4>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="off-bottom-half off-bottom-right">
+                    <span class="off-red">
+                    {{item.off_text}}
+                    </span>
+                        </td>
+                        <td class="off-bottom-half off-bottom-left">
+                            <div class="off-rate">
+                                <i class="fa fa-thumbs-down fa-lg" ng-if="login.status"
+                                   ng-click="insert_comment(login.username, login.token, item.id, -1);"></i>
+                                <i class="fa fa-thumbs-down fa-lg disabled" ng-if="!login.status"></i>
+                                &nbsp;{{item.rate.summation || 0}}&nbsp;
+                                <i class="fa fa-thumbs-up fa-lg" ng-if="login.status"
+                                   ng-click="insert_comment(login.username, login.token, item.id, 1);"></i>
+                                <i class="fa fa-thumbs-up fa-lg disabled" ng-if="!login.status"></i>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="off-bottom-half off-bottom-right">
+                            <span class="off-item-title">از:</span>
+                    <span class="off-date">
+                        <i class="fa fa-calendar"></i>
+                        {{item.date_from | persianDate:'d MMMM' }}
+                    </span>
+                        </td>
+                        <td class="off-bottom-half off-bottom-left">
+                            <span class="off-item-title">تا:</span>
+                    <span class="off-date">
+                        <i class="fa fa-calendar"></i>
+                        {{item.date_to | persianDate:'d MMMM' }}
+                    </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="off-bottom-half off-bottom-right">
+                            <span class="off-item-title">شهر:</span>
+                    <span class="off-city">
+                        <i class="fa fa-map-marker"></i>
+                        {{item.city_name}}
+                    </span>
+                        </td>
+                        <td class="off-bottom-half off-bottom-left">
+                    <span class="off-category">
+                        <i class="fa fa-filter"></i>
+                        {{item.category_name}}
+                    </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="off-bottom-right">
+                            <span class="off-item-title">آدرس:</span>
+                            <span>{{item.address}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="off-bottom-right">
+                            <span class="off-item-title">توضیحات:</span>
+                            <span>{{item.description}}</span>
+                        </td>
+                    </tr>
+                </table>
+                <table class="off-share" ng-if="is_web_app">
+                    <tr>
+                        <td>
+                            <a ng-click="open_link(share_telegram('#/off/'+item.id,item.name+' | '+item.description))"
+                               class="no-decoration">
+                                <div class="off-share-button">
+                                    <i class="fa fa-telegram fa-2x"></i>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="open_link(share_facebook('#/off/'+item.id,item.name+' | '+item.description))"
+                               class="no-decoration">
+                                <div class="off-share-button">
+                                    <i class="fa fa-facebook fa-2x"></i>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="open_link(share_twitter('#/off/'+item.id,item.name+' | '+item.description))"
+                               class="no-decoration">
+                                <div class="off-share-button">
+                                    <i class="fa fa-twitter fa-2x"></i>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="open_link(share_google('#/off/'+item.id,item.name+' | '+item.description))"
+                               class="no-decoration">
+                                <div class="off-share-button">
+                                    <i class="fa fa-google-plus fa-2x"></i>
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <table class="off-share" ng-if="!is_web_app">
+                    <tr>
+                        <td class="total">
+                            <a ng-click="share(item.description, item.name, item.image, '#/off/'+item.id)"
+                               class="no-decoration">
+                                <div class="off-share-button">
+                                    <i class="fa fa-share-alt fa-2x"></i>
+                                    <span>اشتراک گذاری</span>
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <script type='application/ld+json'>
+{
+  "@context": "http://www.schema.org",
+  "@type": "Event",
+  "name": "{{item.name}}",
+  "url": "http://offgard.com/#/off/{{item.id}}",
+  "description": "{{item.description}}",
+  "startDate": "{{item.date_from}}",
+  "endDate": "{{item.date_to}}",
+  "location": {
+    "@type": "Place",
+    "name": "آفگرد",
+    "sameAs": "http://offgard.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{item.address}}",
+      "addressLocality": "{{item.city_name}}",
+      "addressCountry": "ایران"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "description": "{{item.off_text}}"
+  }
+}
+            </script>
+        </div>
+        <div class="c2">
+            <img ng-repeat="item in advertisements.result.c2" src="{{item.path}}" ng-click="open_link(item.link)">
+        </div>
+    </div>
+</div>

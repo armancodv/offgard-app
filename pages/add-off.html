@@ -1,0 +1,86 @@
+<div ui-content-for="title">
+    <span>افزودن تخفیف</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <form ng-if="!off.success" role="form"
+              ng-submit="insert_off(login.username, login.token, category, city, name, image, address, description, 0, 0, date_from, date_to, off_min, off_max)">
+            <fieldset>
+                <legend>افزودن تخفیف</legend>
+                <div class="alert alert-info" ng-if="!login.status"><i class="fa fa-info-circle"></i> برای ثبت تخفیف، وارد شوید.</div>
+                <div class="alert alert-info"><i class="fa fa-info-circle"></i> فیلدهای ستاره دار ضروری می باشد.</div>
+                <div class="alert alert-info"><i class="fa fa-info-circle"></i> لطفا برای هر محصول به صورت مجزا اقدام به ثبت ننمایید. بهتر است که برای هر فروشگاه حداکثر یک تخفیف ثبت شود.</div>
+                <div class="form-group">
+                    <label>*نام فروشگاه</label>
+                    <input type="text" ng-model="name" class="form-control" autocorrect="off" autocapitalize="none"
+                           placeholder="نام فروشگاه را وارد نمایید" dir="rtl" required>
+                </div>
+                <div class="form-group">
+                    <label>*شهر</label>
+                    <select class="form-control" ng-model="city"
+                            ng-options="item.code as item.name for item in cities.result" required></select>
+                </div>
+                <div class="form-group">
+                    <label>*دسته بندی</label>
+                    <select class="form-control" ng-model="category"
+                            ng-options="item.code as item.name for item in categories.result" required></select>
+                </div>
+                <div class="form-group">
+                    <label>توضیحات</label>
+                    <textarea ng-model="description" class="form-control" autocorrect="off" autocapitalize="none"
+                              placeholder="توضیحی مختصر از تخفیف وارد نمایید"
+                              dir="rtl"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>آدرس</label>
+                    <textarea ng-model="address" class="form-control" placeholder="آدرس فروشگاه را وارد نمایید"
+                              dir="rtl" autocorrect="off" autocapitalize="none"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>*شروع تخفیف از (%)</label>
+                    <input type="number" min="0" max="99" step="1" ng-model="off_min" class="form-control"
+                           placeholder="از چند درصد تخفیف" dir="rtl" required>
+                </div>
+                <div class="form-group">
+                    <label>*تخفیف تا (%)</label>
+                    <input type="number" min="1" max="99" step="1" ng-model="off_max" class="form-control"
+                           placeholder="تا چند درصد تخفیف" dir="rtl" required>
+                </div>
+                <div class="form-group">
+                    <label>*از تاریخ</label>
+                    <persian-datepicker ng-model="date_from" min-date="date_min" max-date="date_max" show-weeks="false"
+                                        class="well well-sm" starting-day="6" format-day="d" required=""></persian-datepicker>
+                </div>
+                <div class="form-group">
+                    <label>*تا تاریخ</label>
+                    <persian-datepicker ng-model="date_to" min-date="date_min" max-date="date_max" show-weeks="false"
+                                        class="well well-sm" starting-day="6" format-day="d" required=""></persian-datepicker>
+                </div>
+                <div class="form-group">
+                    <label>عکس</label>
+                    <div class="alert alert-info"><i class="fa fa-info-circle"></i> بهتر است نسبت طول به عرض عکس ارسالی 4 به 3 باشد.</div>
+                    <input type="file" file-model="image"/>
+                </div>
+            </fieldset>
+            <hr>
+            <div class="alert alert-info" ng-if="off.loading"><i class="fa fa-circle-o-notch fa-spin"></i> لطفا صبر
+                کنید.
+            </div>
+            <div class="alert alert-info" ng-if="off.loading"><i class="fa fa-circle-o-notch fa-spin"></i> لطفا صبر کنید.</div>
+            <div class="alert alert-info" ng-if="image.loading"><i class="fa fa-circle-o-notch fa-spin"></i> در حال بارگذاری عکس.</div>
+            <div class="alert alert-danger" ng-if="off.error">{{off.error}}</div>
+            <div class="alert alert-danger" ng-if="image.error">{{image.error}}</div>
+            <button class="btn btn-primary btn-block">ثبت</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn"
+                   ng-click="insert_off(login.username, login.token, category, city, name, image, address, description, 0, 0, date_from, date_to, off_min, off_max)">ثبت</a>
+            </div>
+        </form>
+        <div ng-if="off.success">
+            <div class="alert alert-info" ng-if="image.loading"><i class="fa fa-circle-o-notch fa-spin"></i> در حال بارگذاری عکس.</div>
+            <div class="alert alert-success" ng-if="off.success">{{off.success}}</div>
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i>با تشکر از شما. آگهی پس از بررسی در لیست تخفیفات نمایش داده خواهد شد.</div>
+            <a class="btn btn-primary" href="#/my-offs" ng-click="delete_message()"><i class="fa fa-list-ul"></i> تخفیفات من</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div ui-content-for="title" ng-init="show_categories()">
+    <span>دسته بندی</span>
+    <div class="refresh" ng-if="categories.loading"><i class="fa fa-refresh fa-spin"></i></div>
+    <div class="refresh" ng-click="show_categories()" ng-if="!categories.loading"><i class="fa fa-refresh"></i></div>
+</div>
+
+<div class="scrollable" ui-shared-state="searchBar">
+    <input
+            ng-if="Ui.active('searchBar')"
+            ng-model="$parent.category_search"
+            type="search"
+            class="form-control scrollable-header"
+            placeholder="جستجو"/>
+    <div class="scrollable-content">
+        <div class="list-group">
+            <div>
+                <a ng-if="category_selected.code==''" ng-click="select_category({code:'',name:'همه'})" href="#/" class="list-group-item active"> همه </a>
+                <a ng-if="category_selected.code!=''" ng-click="select_category({code:'',name:'همه'})" href="#/" class="list-group-item"> همه </a>
+            </div>
+            <div ng-repeat="item in categories.result | filter:category_search">
+                <a ng-if="item.code==category_selected.code" ng-click="select_category(item)" href="#/" class="list-group-item active"> {{ item.name }} </a>
+                <a ng-if="item.code!=category_selected.code" ng-click="select_category(item)" href="#/" class="list-group-item"> {{ item.name }} </a>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-block btn-lg btn-primary scrollable-footer" ui-toggle="searchBar">
+        <i class="fa fa-search"></i>
+        <span ui-hide="searchBar">نمایش</span>
+        <span ui-show="searchBar">پنهان کردن</span>
+        جستجو
+    </a>
+</div>

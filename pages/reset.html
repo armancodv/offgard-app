@@ -1,0 +1,30 @@
+<div ui-content-for="title">
+    <span>فراموشی کلمه عبور</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <form role="form" ng-submit="reset_login(email,captcha.captcha_id,captcha_code)" ng-if="!login.status">
+            <fieldset>
+                <legend>فراموشی کلمه عبور</legend>
+                <div class="alert alert-danger" ng-if="login.error">{{login.error}}</div>
+                <div class="form-group">
+                    <label>ایمیل</label>
+                    <input type="email" ng-model="email" class="form-control" autocorrect="off" autocapitalize="none"
+                           placeholder="ایمیل خود را وارد نمایید" dir="ltr">
+                </div>
+                <div class="form-group">
+                    <label>تصویر امنیتی</label>
+                    <img src="{{show_captcha_url(captcha.captcha_id)}}">
+                    <i class="fa fa-refresh" ng-click="show_captcha()"></i>
+                    <input type="text" ng-model="captcha_code" class="form-control" autocorrect="off" autocapitalize="none"
+                           placeholder="تصویر امنیتی را وارد نمایید" dir="ltr">
+                </div>
+            </fieldset>
+            <hr>
+            <button class="btn btn-primary btn-block">ارسال</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="reset_login(email,captcha.captcha_id,captcha_code)">ارسال</a>
+            </div>
+        </form>
+    </div>
+</div>
